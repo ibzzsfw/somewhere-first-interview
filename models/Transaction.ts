@@ -5,7 +5,7 @@ import Booking from './Booking'
  * @description Store all transactions
  */
 class Transaction {
-  private static instance : Transaction
+  private static instance: Transaction
   private activeBooking: Booking[]
   private canceledBooking: Booking[]
 
@@ -52,18 +52,7 @@ class Transaction {
     }
   }
 
-  report = () => {
-
-    let report: string = ''
-
-    for (const booking of this.activeBooking) {
-      report += `Booking ${booking.getId()} : ${booking.getRoomId()} ${booking.getCheckIn()} ${booking.getCheckOut()}`
-    }
-
-    console.log(report)
-  }
-
-
+  searchActiveBooking = (roomId: number) => this.activeBooking.filter(booking => booking.getRoomId() == roomId)
 }
 
 export default Transaction

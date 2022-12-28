@@ -37,7 +37,23 @@ class Hotel {
 
   cancel = (bookingId: number) => this.transaction.cancel(bookingId)
 
-  report = () => this.transaction.report()
+  report = () => {
+
+    // show active booking by room name
+    this.roomManager.getRoomList().map(room => {
+
+      let { id, name } = room
+      console.log(`Room: ${name}`)
+
+      let booking = this.transaction.searchActiveBooking(id)
+
+      if (booking.length > 0) {
+        booking.map(booking => {
+          console.log(`Booking Id ${booking.getId()}: ${booking.getCheckIn()} -> ${booking.getCheckOut()}`)
+        })
+      }
+    })
+  }
 
 }
 

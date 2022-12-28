@@ -1,36 +1,31 @@
 import Hotel from "./models/Hotel"
+class Service {
+  private hotel: Hotel;
 
-const hotel: Hotel = Hotel.getInstance()
-
-let commands = `7
-create room Suite
-book 1 5 10
-create room Deluxe
-book 2 1 10
-book 1 12 18
-book 2 20 25
-cancel 4`
-
-let commandQueue = commands.split('\n')
-
-const execute = (command: string) => {
-
-  const [commandName, ...params] = command.split(' ')
-
-  switch (commandName) {
-    case 'create':
-      hotel.createRoom(params[1])
-      break
-    case 'book':
-      hotel.book(parseInt(params[0]), parseInt(params[1]), parseInt(params[2]))
-      break
-    case 'cancel':
-      hotel.cancel(parseInt(params[0]))
-      break
-    default:
-      break
+  constructor() {
+    this.hotel = Hotel.getInstance();
   }
+
+  private commandProcessors = {
+    create: (params: string[]) => this.hotel.createRoom(params[1]),
+    book: (params: string[]) => this.hotel.book(parseInt(params[0]), parseInt(params[1]), parseInt(params[2])),
+    cancel: (params: string[]) => this.hotel.cancel(parseInt(params[0])),
+    report: () => this.hotel.report()
+  };
+
+  add = (name: string, processor: any) => this.commandProcessors[name] = processor
+  remove = (name: string) => delete this.commandProcessors[name]
+  update = (name: string, processor: any) => this.add(name, processor)
+  
+  processCommand = (command: string) => {
+    const [commandName, ...params] = command.split(' ');
+    const processor: any = this.commandProcessors[commandName];
+    if (processor) {
+      processor(params);
+    } else {
+      // Handle invalid command
+    }
+  };
 }
 
-commandQueue.map(command => execute(command))
-hotel.report()
+export default Service;

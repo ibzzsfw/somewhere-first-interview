@@ -23,7 +23,7 @@ class RoomManager {
   getRoomAmount = () => this.room.length
 
   search = (roomId: number) => this.room.filter(room => room.getId() == roomId)[0]
-  
+
   create = (name: string) => {
 
     let room: Room = this.room.filter(room => room.getName() == name)[0]
@@ -32,6 +32,8 @@ class RoomManager {
       this.room.push(new Room(this.getRoomAmount() + 1, name))
     }
   }
+
+  getRoomList = () => this.room.map(room => ({ id: room.getId(), name: room.getName() }))
 
 }
 
