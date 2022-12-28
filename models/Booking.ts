@@ -1,3 +1,12 @@
+/**
+ * @class Booking
+ * @description Booking class for transaction of booking
+ * @param {number} id
+ * @param {number} roomId
+ * @param {number} checkIn
+ * @param {number} checkOut
+ * @returns {Booking}
+ */
 class Booking {
   private id: number
   private roomId: number

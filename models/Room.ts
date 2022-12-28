@@ -1,3 +1,9 @@
+/**
+ * @class Room
+ * @description Room class
+ * @param {number} id  
+ * @param {string} name
+ */
 class Room {
   private id: number
   private name: string

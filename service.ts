@@ -13,7 +13,7 @@ cancel 4`
 
 let commandQueue = commands.split('\n')
 
-const mapCommand = (command: string) => {
+const execute = (command: string) => {
 
   const [commandName, ...params] = command.split(' ')
 
@@ -32,5 +32,5 @@ const mapCommand = (command: string) => {
   }
 }
 
-commandQueue.map(command => mapCommand(command))
+commandQueue.map(command => execute(command))
 hotel.report()
