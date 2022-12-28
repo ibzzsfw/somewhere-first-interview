@@ -60,7 +60,7 @@ class Transaction {
       report += `Booking ${booking.getId()} : ${booking.getRoomId()} ${booking.getCheckIn()} ${booking.getCheckOut()}`
     }
 
-    return report
+    console.log(report)
   }
 
 

@@ -22,6 +22,8 @@ class RoomManager {
 
   getRoomAmount = () => this.room.length
 
+  search = (roomId: number) => this.room.filter(room => room.getId() == roomId)[0]
+  
   create = (name: string) => {
 
     let room: Room = this.room.filter(room => room.getName() == name)[0]
@@ -31,7 +33,6 @@ class RoomManager {
     }
   }
 
-  search = (roomId: number) => this.room.filter(room => room.getId() == roomId)[0]
 }
 
 export default RoomManager

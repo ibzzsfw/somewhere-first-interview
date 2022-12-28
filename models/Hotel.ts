@@ -27,12 +27,12 @@ class Hotel {
   createRoom = (name: string) => this.roomManager.create(name)
 
   book = (roomId: number, checkIn: number, checkOut: number) => {
-  
-      const room: Room | undefined = this.roomManager.search(roomId)
-  
-      if (room) {
-        this.transaction.book(roomId, checkIn, checkOut)
-      }
+
+    const room: Room | undefined = this.roomManager.search(roomId)
+
+    if (room) {
+      this.transaction.book(roomId, checkIn, checkOut)
+    }
   }
 
   cancel = (bookingId: number) => this.transaction.cancel(bookingId)
