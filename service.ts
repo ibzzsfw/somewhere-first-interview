@@ -1,4 +1,5 @@
 import Hotel from "./models/Hotel"
+
 class Service {
   private hotel: Hotel;
 
