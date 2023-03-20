@@ -1,40 +1,40 @@
+import IRoom from "./IRoom";
 import Room from "./Room";
 
-/**
- * @class Catalog
- * @description Store hotel list
- */
-
 class RoomManager {
-  private static instance: RoomManager
-  private room: Room[]
+  private static _instance: RoomManager
+  private _room: Map<string, Room>
 
   private constructor() {
-    this.room = []
+    this._room = new Map<string, Room>()
   }
 
-  static getInstance() {
-    if (!RoomManager.instance) {
-      RoomManager.instance = new RoomManager();
+  static get instance(): RoomManager {
+    if (!RoomManager._instance) {
+      RoomManager._instance = new RoomManager();
     }
-    return RoomManager.instance;
+    return RoomManager._instance;
   }
 
-  getRoomAmount = () => this.room.length
+  get room() {
+    return Array.from(this._room.values()).map(room => {
+      let { id, name } = room
+      return { id, name }
+    }) satisfies Array<IRoom>
+  }
 
-  search = (roomId: number) => this.room.filter(room => room.getId() == roomId)[0]
+  searchByName = (name: string) => this._room.get(name)
+
+  searchById = (id: number) => Array.from(this._room.values()).find(room => room.id === id)
 
   create = (name: string) => {
 
-    let room: Room = this.room.filter(room => room.getName() == name)[0]
+    let room: Room | undefined = this.searchByName(name)
 
     if (!room) {
-      this.room.push(new Room(this.getRoomAmount() + 1, name))
+      this._room.set(name, new Room(this._room.size + 1, name))
     }
   }
-
-  getRoomList = () => this.room.map(room => ({ id: room.getId(), name: room.getName() }))
-
 }
 
 export default RoomManager

@@ -1,34 +1,32 @@
 import Booking from './Booking'
 
-/**
- * @class Transaction
- * @description Store all transactions
- */
 class Transaction {
-  private static instance: Transaction
-  private activeBooking: Booking[]
-  private canceledBooking: Booking[]
+  private static _instance: Transaction
+  private _activeBooking: Array<Booking>
+  private _canceledBooking: Array<Booking>
 
   private constructor() {
-    this.activeBooking = []
-    this.canceledBooking = []
+    this._activeBooking = new Array<Booking>()
+    this._canceledBooking = new Array<Booking>()
   }
 
-  static getInstance() {
-    if (!Transaction.instance) {
-      Transaction.instance = new Transaction()
+  static get instance(): Transaction {
+    if (!Transaction._instance) {
+      Transaction._instance = new Transaction()
     }
-    return Transaction.instance
+    return Transaction._instance
   }
 
-  bookingAmount = () => this.activeBooking.length + this.canceledBooking.length
+  get length() {
+    return this._activeBooking.length + this._canceledBooking.length
+  }
 
   isRoomAvailble = (roomId: number, checkIn: number, checkOut: number) => {
-    for (const booking of this.activeBooking) {
+    for (const booking of this._activeBooking) {
       if (
-        booking.getRoomId() === roomId &&
-        !(checkOut <= booking.getCheckIn() ||
-          checkIn >= booking.getCheckOut())
+        booking.roomId === roomId &&
+        !(checkOut <= booking.checkIn ||
+          checkIn >= booking.checkOut)
       ) {
         return false;
       }
@@ -39,20 +37,26 @@ class Transaction {
   book = (roomId: number, checkIn: number, checkOut: number) => {
 
     if (this.isRoomAvailble(roomId, checkIn, checkOut)) {
-      this.activeBooking.push(new Booking(this.bookingAmount() + 1, roomId, checkIn, checkOut))
+      this._activeBooking.push(new Booking(this.length + 1, roomId, checkIn, checkOut))
     }
   }
 
   cancel = (bookingId: number) => {
-    const booking: Booking | undefined = this.activeBooking.filter(booking => booking.getId() == bookingId)[0]
+    const booking: Booking | undefined = this.searchActiveBookingById(bookingId)
 
     if (booking) {
-      this.canceledBooking.push(booking)
-      this.activeBooking = this.activeBooking.filter(booking => booking.getId() != bookingId)
+      this._canceledBooking.push(booking)
+      this.removeFromActiveBooking(bookingId)
     }
   }
 
-  searchActiveBooking = (roomId: number) => this.activeBooking.filter(booking => booking.getRoomId() == roomId)
+  searchActiveBookingById = (bookingId: number) => this._activeBooking.find(booking => booking.id == bookingId)
+
+  searchActiveBooking = (roomId: number) => this._activeBooking.filter(booking => booking.roomId == roomId)
+
+  removeFromActiveBooking = (bookingId: number) => {
+    this._activeBooking = this._activeBooking.filter(booking => booking.id != bookingId)
+  }
 }
 
 export default Transaction

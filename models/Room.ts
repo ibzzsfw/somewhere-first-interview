@@ -1,20 +1,16 @@
-/**
- * @class Room
- * @description Room class
- * @param {number} id  
- * @param {string} name
- */
-class Room {
-  private id: number
-  private name: string
+import IRoom from "./IRoom"
+class Room implements IRoom {
+  private _id: number
+  private _name: string
 
   constructor(id: number, name: string) {
-    this.id = id
-    this.name = name
+    this._id = id
+    this._name = name
   }
 
-  getId = () => this.id
-  getName = () => this.name
+  get id() { return this._id }
+  get name() { return this._name }
+
 }
 
 export default Room

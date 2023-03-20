@@ -1,29 +1,20 @@
-/**
- * @class Booking
- * @description Booking class for transaction of booking
- * @param {number} id
- * @param {number} roomId
- * @param {number} checkIn
- * @param {number} checkOut
- * @returns {Booking}
- */
 class Booking {
-  private id: number
-  private roomId: number
-  private checkIn: number
-  private checkOut: number
+  private _id: number
+  private _roomId: number
+  private _checkIn: number
+  private _checkOut: number
 
   constructor(id: number, roomId: number, checkIn: number, checkOut: number) {
-    this.id = id
-    this.roomId = roomId
-    this.checkIn = checkIn
-    this.checkOut = checkOut
+    this._id = id
+    this._roomId = roomId
+    this._checkIn = checkIn
+    this._checkOut = checkOut
   }
 
-  getId = () => this.id
-  getRoomId = () => this.roomId
-  getCheckIn = () => this.checkIn
-  getCheckOut = () => this.checkOut
+  get id() { return this._id }
+  get roomId() { return this._roomId }
+  get checkIn() { return this._checkIn }
+  get checkOut() { return this._checkOut }
 }
 
 export default Booking

@@ -1,6 +1,6 @@
 import Service from './service';
 
-const service = new Service();
+const service: Service = Service.instance
 
 let commands = `7
 create room Suite
@@ -12,8 +12,8 @@ book 2 20 25
 cancel 4
 report`
 
-const commandQueue = commands.split('\n');
+const commandQueue: Array<string> = commands.split('\n');
 
 commandQueue.shift(); // Remove first line
 
-commandQueue.forEach(service.processCommand)
+commandQueue.forEach(service.process)
