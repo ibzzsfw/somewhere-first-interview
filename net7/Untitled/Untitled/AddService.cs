@@ -2,11 +2,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Untitled.Controllers;
 using Untitled.Core.Repository;
 using Untitled.Core.Services;
-using Untitled.Helper;
 
 namespace Untitled;
 
-public class AddService
+public static class AddService
 {
     private static void ConfigureServices(IServiceCollection services)
     {
