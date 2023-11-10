@@ -1,25 +1,16 @@
-﻿/*
- * Command line arguments:
- * 1. Create a new room: create room <name>
- * 2. Create a new booking: book <room id> <check in date> <check out date>
- * 3. Cancel a booking: cancel <booking id>
- * 4. Report: report
- */
-
-
-using System.Globalization;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Untitled.Constant;
 using Untitled.Controllers;
 using Untitled.Core.Repository;
 using Untitled.Core.Services;
+using Untitled.Helper;
 
 namespace Untitled;
 
 internal static class Program
 {
-    private static void Main()
+    private static void ConfigureServices(IServiceCollection services)
     {
-        var services = new ServiceCollection();
         services.AddSingleton<IRoomRepository, RoomRepository>();
         services.AddSingleton<IBookingRepository, BookingRepository>();
         services.AddSingleton<IBookingService, BookingService>();
@@ -28,76 +19,51 @@ internal static class Program
         services.AddSingleton<BookingController>();
         services.AddSingleton<RoomController>();
         services.AddSingleton<ReportController>();
+    }
 
+    private static void Main()
+    {
+        var services = new ServiceCollection();
+        ConfigureServices(services);
         var serviceProvider = services.BuildServiceProvider();
-
         while (true)
         {
             var command = Console.ReadLine();
-            var roomController = serviceProvider.GetService<RoomController>() ?? throw new NullReferenceException();
-            var bookingController =
-                serviceProvider.GetService<BookingController>() ?? throw new NullReferenceException();
-            var reportController = serviceProvider.GetService<ReportController>() ?? throw new NullReferenceException();
+
+            var roomController = ServiceProviderHelper.GetService<RoomController>(serviceProvider);
+            var bookingController = ServiceProviderHelper.GetService<BookingController>(serviceProvider);
+            var reportController = ServiceProviderHelper.GetService<ReportController>(serviceProvider);
 
             if (command == null)
             {
                 continue;
             }
 
-            var commandParts = command.Split(' ');
-            if (commandParts.Length < 1)
+            switch (command)
             {
-                Console.WriteLine("Invalid command");
-                continue;
-            }
-
-            switch (commandParts[0])
-            {
-                case "create":
-                    if (commandParts.Length != 3)
-                    {
-                        Console.WriteLine("Invalid command");
-                        continue;
-                    }
-
-                    if (commandParts[1] == "room")
-                    {
-                        roomController.Create(commandParts[2]);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid command");
-                    }
-
+                case var _ when CommandRegex.CreateRoom.IsMatch(command):
+                    Command.CreateRoom(command, roomController);
                     break;
-                case "book":
-                    if (commandParts.Length != 4)
-                    {
-                        Console.WriteLine("Invalid command");
-                        continue;
-                    }
-
-                    bookingController.Book
-                    (
-                        int.Parse(commandParts[1]),
-                        DateTime.ParseExact(commandParts[2], "yyyyMMdd", CultureInfo.InvariantCulture),
-                        DateTime.ParseExact(commandParts[3], "yyyyMMdd", CultureInfo.InvariantCulture)
-                    );
+                case var _ when CommandRegex.BookingByRoomId.IsMatch(command):
+                    Command.BookingByRoomId(command, bookingController);
                     break;
-                case "cancel":
-                    if (commandParts.Length != 2)
-                    {
-                        Console.WriteLine("Invalid command");
-                        continue;
-                    }
-
-                    bookingController.Cancel(int.Parse(commandParts[1]));
+                case var _ when CommandRegex.BookingByRoomName.IsMatch(command):
+                    Command.BookingByRoomName(command, bookingController);
                     break;
-                case "report":
-                    reportController.Report();
+                case var _ when CommandRegex.CancelBooking.IsMatch(command):
+                    Command.CancelBooking(command, bookingController);
                     break;
+                case var _ when CommandRegex.Report.IsMatch(command):
+                    Command.Report(command, reportController);
+                    break;
+                case var _ when CommandRegex.ListRooms.IsMatch(command):
+                    Command.ListRooms(command, roomController);
+                    break;
+                case var _ when CommandRegex.Exit.IsMatch(command):
+                    Console.WriteLine("Exiting...");
+                    return;
                 default:
-                    Console.WriteLine("Invalid command");
+                    Console.WriteLine("Command not found");
                     break;
             }
         }

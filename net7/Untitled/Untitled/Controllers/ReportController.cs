@@ -2,7 +2,7 @@ using Untitled.Core.Services;
 
 namespace Untitled.Controllers;
 
-public class ReportController
+public class ReportController : IController
 {
     private readonly IReportService _reportService;
 

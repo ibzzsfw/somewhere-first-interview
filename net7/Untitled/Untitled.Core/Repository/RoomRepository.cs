@@ -19,7 +19,36 @@ public class RoomRepository : IRoomRepository
             Name = name
         };
 
-        _rooms.Add(name, room);
+        try
+        {
+            _rooms.Add(name, room);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"RoomRepository.Add: {e.Message}");
+        }
+    }
+
+    private void AddMany(IEnumerable<string> names)
+    {
+        var existingRooms = new List<string>();
+
+        foreach (var name in names)
+        {
+            if (_rooms.ContainsKey(name))
+            {
+                existingRooms.Add(name);
+            }
+            else
+            {
+                Add(name);
+            }
+        }
+
+        if (existingRooms.Count > 0)
+        {
+            Console.WriteLine($"RoomRepository.AddMany: {string.Join(", ", existingRooms)} already exist");
+        }
     }
 
     public Room Get(int id)
@@ -33,19 +62,35 @@ public class RoomRepository : IRoomRepository
         return room;
     }
 
+    private List<Room> GetMany(IEnumerable<int> ids) => ids.Select(Get).ToList();
+
     public Room Get(string name)
     {
         var room = _rooms[name];
         if (room == null)
         {
-            throw new ArgumentException($"Room with name {name} does not exist");
+            throw new KeyNotFoundException($"Room with name {name} does not exist");
         }
 
         return room;
     }
 
+    private List<Room> GetMany(IEnumerable<string> names) => names.Select(Get).ToList();
+
     public IEnumerable<Room> GetAll()
     {
         return _rooms.Values;
+    }
+
+    public void Remove(string name)
+    {
+        try
+        {
+            _rooms.Remove(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"RoomRepository.Remove: {e.Message}");
+        }
     }
 }

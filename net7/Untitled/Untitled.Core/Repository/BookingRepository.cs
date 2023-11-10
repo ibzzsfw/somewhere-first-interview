@@ -30,6 +30,19 @@ public class BookingRepository : IBookingRepository
         return _activeBookings.Count + _cancelledBookings.Count + 1;
     }
 
+    public void Upsert(Booking booking)
+    {
+        var bookingIndex = _activeBookings.FindIndex(b => b.Id == booking.Id);
+        if (bookingIndex == -1)
+        {
+            _activeBookings.Add(booking);
+        }
+        else
+        {
+            _activeBookings[bookingIndex] = booking;
+        }
+    }
+
     public void AddToActiveList(int roomId, DateTime checkIn, DateTime checkOut)
     {
         if (!IsAvailable(roomId, checkIn, checkOut))
@@ -59,16 +72,21 @@ public class BookingRepository : IBookingRepository
         _activeBookings.Remove(booking);
     }
 
-    public void AddToCancelledList(int roomId, DateTime checkIn, DateTime checkOut)
+    public void AddToCancelledList(int bookingId, int roomId, DateTime checkIn, DateTime checkOut)
     {
         var booking = new Booking
         {
-            Id = GetCurrentId(),
+            Id = bookingId,
             RoomId = roomId,
             CheckIn = checkIn,
             CheckOut = checkOut
         };
 
+        _cancelledBookings.Add(booking);
+    }
+
+    public void AddToCancelledList(Booking booking)
+    {
         _cancelledBookings.Add(booking);
     }
 
@@ -97,5 +115,16 @@ public class BookingRepository : IBookingRepository
         }
 
         return booking;
+    }
+
+    public void Update(Booking booking)
+    {
+        var bookingIndex = _activeBookings.FindIndex(b => b.Id == booking.Id);
+        if (bookingIndex == -1)
+        {
+            throw new ArgumentException($"Booking with id {booking.Id} does not exist");
+        }
+
+        _activeBookings[bookingIndex] = booking;
     }
 }
