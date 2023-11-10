@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Text.RegularExpressions;
+using Microsoft.Extensions.DependencyInjection;
 using Untitled.Constant;
 using Untitled.Controllers;
 using Untitled.Core.Repository;
@@ -39,32 +40,39 @@ internal static class Program
                 continue;
             }
 
-            switch (command)
+            var commands = new Dictionary<Regex, Action<string>>
             {
-                case var _ when CommandRegex.CreateRoom.IsMatch(command):
-                    Command.CreateRoom(command, roomController);
-                    break;
-                case var _ when CommandRegex.BookingByRoomId.IsMatch(command):
-                    Command.BookingByRoomId(command, bookingController);
-                    break;
-                case var _ when CommandRegex.BookingByRoomName.IsMatch(command):
-                    Command.BookingByRoomName(command, bookingController);
-                    break;
-                case var _ when CommandRegex.CancelBooking.IsMatch(command):
-                    Command.CancelBooking(command, bookingController);
-                    break;
-                case var _ when CommandRegex.Report.IsMatch(command):
-                    Command.Report(command, reportController);
-                    break;
-                case var _ when CommandRegex.ListRooms.IsMatch(command):
-                    Command.ListRooms(command, roomController);
-                    break;
-                case var _ when CommandRegex.Exit.IsMatch(command):
-                    Console.WriteLine("Exiting...");
-                    return;
-                default:
-                    Console.WriteLine("Command not found");
-                    break;
+                { CommandRegex.CreateRoom, s => Command.CreateRoom(s, roomController) },
+                { CommandRegex.BookingByRoomId, s => Command.BookingByRoomId(s, bookingController) },
+                { CommandRegex.BookingByRoomName, s => Command.BookingByRoomName(s, bookingController) },
+                { CommandRegex.CancelBooking, s => Command.CancelBooking(s, bookingController) },
+                { CommandRegex.Report, s => Command.Report(s, reportController) },
+                { CommandRegex.ListRooms, s => Command.ListRooms(s, roomController) },
+                {
+                    CommandRegex.Exit, _ =>
+                    {
+                        Console.WriteLine("Exiting...");
+                        Environment.Exit(0);
+                    }
+                }
+            };
+
+            foreach
+            (
+                var commandAction in commands
+                    .Where
+                    (
+                        commandAction => commandAction.Key.IsMatch(command)
+                    )
+            )
+            {
+                commandAction.Value(command);
+                break;
+            }
+
+            if (!commands.Keys.Any(regex => regex.IsMatch(command)))
+            {
+                Console.WriteLine("Command not found");
             }
         }
     }
