@@ -13,7 +13,7 @@ public static class DateHelper
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return DateTime.Now;
         }
     }
 }

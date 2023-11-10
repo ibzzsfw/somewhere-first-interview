@@ -10,32 +10,18 @@ namespace Untitled;
 
 internal static class Program
 {
-    private static void ConfigureServices(IServiceCollection services)
-    {
-        services.AddSingleton<IRoomRepository, RoomRepository>();
-        services.AddSingleton<IBookingRepository, BookingRepository>();
-        services.AddSingleton<IBookingService, BookingService>();
-        services.AddSingleton<IRoomService, RoomService>();
-        services.AddSingleton<IReportService, ReportService>();
-        services.AddSingleton<BookingController>();
-        services.AddSingleton<RoomController>();
-        services.AddSingleton<ReportController>();
-    }
-
     private static void Main()
     {
-        var services = new ServiceCollection();
-        ConfigureServices(services);
-        var serviceProvider = services.BuildServiceProvider();
+        var serviceProvider = AddService.GetServiceProvider();
+
+        var roomController = ServiceProviderHelper.GetService<RoomController>(serviceProvider);
+        var bookingController = ServiceProviderHelper.GetService<BookingController>(serviceProvider);
+        var reportController = ServiceProviderHelper.GetService<ReportController>(serviceProvider);
+
         while (true)
         {
             var command = Console.ReadLine();
-
-            var roomController = ServiceProviderHelper.GetService<RoomController>(serviceProvider);
-            var bookingController = ServiceProviderHelper.GetService<BookingController>(serviceProvider);
-            var reportController = ServiceProviderHelper.GetService<ReportController>(serviceProvider);
-
-            if (command == null)
+            if (command is null)
             {
                 continue;
             }
@@ -51,7 +37,7 @@ internal static class Program
                 {
                     CommandRegex.Exit, _ =>
                     {
-                        Console.WriteLine("Exiting...");
+                        Console.WriteLine($"End {new DateTime():yyyy-MM-dd HH:mm:ss}");
                         Environment.Exit(0);
                     }
                 }
