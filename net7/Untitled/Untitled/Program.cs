@@ -1,9 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using Microsoft.Extensions.DependencyInjection;
 using Untitled.Constant;
 using Untitled.Controllers;
-using Untitled.Core.Repository;
-using Untitled.Core.Services;
 using Untitled.Helper;
 
 namespace Untitled;
