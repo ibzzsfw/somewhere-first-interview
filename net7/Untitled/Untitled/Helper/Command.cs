@@ -13,17 +13,19 @@ public static class Command
 
     public static void BookingByRoomId(string command, BookingController controller)
     {
-        var roomId = int.Parse(CommandRegex.BookingByRoomId.Match(command).Groups["roomId"].Value);
-        var checkIn = DateHelper.ToDateTime(CommandRegex.BookingByRoomId.Match(command).Groups["checkIn"].Value);
-        var checkOut = DateHelper.ToDateTime(CommandRegex.BookingByRoomId.Match(command).Groups["checkOut"].Value);
+        var match = CommandRegex.BookingByRoomId.Match(command);
+        var roomId = int.Parse(match.Groups["roomId"].Value);
+        var checkIn = DateHelper.ToDateTime(match.Groups["checkIn"].Value);
+        var checkOut = DateHelper.ToDateTime(match.Groups["checkOut"].Value);
         controller.Book(roomId, checkIn, checkOut);
     }
 
     public static void BookingByRoomName(string command, BookingController controller)
     {
-        var roomName = CommandRegex.BookingByRoomName.Match(command).Groups["roomName"].Value;
-        var checkIn = DateHelper.ToDateTime(CommandRegex.BookingByRoomId.Match(command).Groups["checkIn"].Value);
-        var checkOut = DateHelper.ToDateTime(CommandRegex.BookingByRoomId.Match(command).Groups["checkOut"].Value);
+        var match = CommandRegex.BookingByRoomName.Match(command);
+        var roomName = match.Groups["roomName"].Value;
+        var checkIn = DateHelper.ToDateTime(match.Groups["checkIn"].Value);
+        var checkOut = DateHelper.ToDateTime(match.Groups["checkOut"].Value);
         controller.Book(roomName, checkIn, checkOut);
     }
 
@@ -33,12 +35,12 @@ public static class Command
         controller.Cancel(bookingId);
     }
 
-    public static void Report(string command, ReportController controller)
+    public static void Report(ReportController controller)
     {
         controller.Report();
     }
 
-    public static void ListRooms(string command, RoomController controller)
+    public static void ListRooms(RoomController controller)
     {
         controller.List();
     }

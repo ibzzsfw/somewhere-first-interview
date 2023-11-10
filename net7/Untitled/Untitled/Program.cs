@@ -29,8 +29,8 @@ internal static class Program
                 { CommandRegex.BookingByRoomId, s => Command.BookingByRoomId(s, bookingController) },
                 { CommandRegex.BookingByRoomName, s => Command.BookingByRoomName(s, bookingController) },
                 { CommandRegex.CancelBooking, s => Command.CancelBooking(s, bookingController) },
-                { CommandRegex.Report, s => Command.Report(s, reportController) },
-                { CommandRegex.ListRooms, s => Command.ListRooms(s, roomController) },
+                { CommandRegex.Report, s => Command.Report(reportController) },
+                { CommandRegex.ListRooms, s => Command.ListRooms(roomController) },
                 {
                     CommandRegex.Exit, _ =>
                     {
