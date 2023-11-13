@@ -8,6 +8,7 @@ public interface IBookingRepository
     public void Update(Booking booking);
     public void Upsert(Booking booking);
     public void AddToActiveList(int roomId, DateTime checkIn, DateTime checkOut);
+    public void AddToActiveList(UnprocessedBooking unprocessedBooking);
     public void RemoveFromActiveList(int bookingId);
     public void AddToCancelledList(int bookingId, int roomId, DateTime checkIn, DateTime checkOut);
     public void AddToCancelledList(Booking booking);

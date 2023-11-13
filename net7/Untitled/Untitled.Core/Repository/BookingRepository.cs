@@ -57,6 +57,16 @@ public class BookingRepository : IBookingRepository
         _activeBookings.Add(booking);
     }
 
+    public void AddToActiveList(UnprocessedBooking unprocessedBooking)
+    {
+        AddToActiveList
+        (
+            unprocessedBooking.RoomId,
+            unprocessedBooking.CheckIn,
+            unprocessedBooking.CheckOut
+        );
+    }
+
     public void RemoveFromActiveList(int bookingId)
     {
         var booking = _activeBookings.FirstOrDefault(b => b.Id == bookingId);
