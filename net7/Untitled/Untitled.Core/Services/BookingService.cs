@@ -15,7 +15,7 @@ public class BookingService : IBookingService
         _roomRepository = roomRepository;
     }
 
-    public void Book(int roomId, DateTime checkIn, DateTime checkOut)
+    public void Book(int roomId, DateTime checkIn, DateTime checkOut, bool enableUnprocessed = false)
     {
         var unprocessedBooking = new UnprocessedBooking
         {
@@ -31,7 +31,11 @@ public class BookingService : IBookingService
         }
         catch (Exception e)
         {
-            _unprocessedBookings.Add(unprocessedBooking);
+            if (enableUnprocessed)
+            {
+                _unprocessedBookings.Add(unprocessedBooking);
+            }
+
             Console.WriteLine
             (
                 $"Unprocessed booking for room with id {roomId} from {checkIn} to {checkOut} with error: {e.Message}"
@@ -39,12 +43,12 @@ public class BookingService : IBookingService
         }
     }
 
-    public void Book(string roomName, DateTime checkIn, DateTime checkOut)
+    public void Book(string roomName, DateTime checkIn, DateTime checkOut, bool enableUnprocessed = false)
     {
         try
         {
             var room = _roomRepository.Get(roomName);
-            Book(room.Id, checkIn, checkOut);
+            Book(room.Id, checkIn, checkOut, enableUnprocessed);
         }
         catch (Exception e)
         {
