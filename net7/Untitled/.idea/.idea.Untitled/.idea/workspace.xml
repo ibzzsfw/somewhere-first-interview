@@ -8,6 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f35a61ca-b219-4e45-be7b-5fc7402e4d8d" name="Changes" comment="[NET7] chore: remove unused using">
+      <change beforePath="$PROJECT_DIR$/Untitled/AddService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled/Helper/ServiceProviderHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled/ServiceProviderWrapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Untitled/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,6 +117,7 @@
       <workItem from="1699607072302" duration="3164000" />
       <workItem from="1699610894674" duration="5837000" />
       <workItem from="1699631309364" duration="5369000" />
+      <workItem from="1699894692876" duration="328000" />
     </task>
     <task id="LOCAL-00001" summary="[NET7] feat: update more">
       <option name="closed" value="true" />

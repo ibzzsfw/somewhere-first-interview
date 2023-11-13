@@ -3,9 +3,9 @@ using Untitled.Controllers;
 using Untitled.Core.Repository;
 using Untitled.Core.Services;
 
-namespace Untitled.Helper;
+namespace Untitled;
 
-public static class ServiceProviderHelper
+public static class ServiceProviderWrapper
 {
     private static void ConfigureServices(IServiceCollection services)
     {
