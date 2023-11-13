@@ -1,4 +1,3 @@
-using Serilog;
 using Untitled.Core.Repository;
 
 namespace Untitled.Core.Services;
