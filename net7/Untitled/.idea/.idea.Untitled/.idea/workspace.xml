@@ -7,10 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f35a61ca-b219-4e45-be7b-5fc7402e4d8d" name="Changes" comment="[NET7] chore: remove unused using">
-      <change beforePath="$PROJECT_DIR$/Untitled/AddService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Untitled/Helper/ServiceProviderHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled/ServiceProviderWrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Untitled/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled/Program.cs" afterDir="false" />
+    <list default="true" id="f35a61ca-b219-4e45-be7b-5fc7402e4d8d" name="Changes" comment="feat: wire up wrapper&#10;- move main to top-level code">
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Models/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Models/Booking.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Models/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Models/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Repository/BookingRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Repository/BookingRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Services/BookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Services/BookingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Services/ReportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Services/ReportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.Core/Services/RoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled.Core/Services/RoomService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled/Helper/Command.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled/Helper/Command.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,12 +30,13 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e4de4c1a635a4a2f94a603ca2878066f16b08/3b/ca861a77/ServiceCollectionContainerBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/646d43669aab141af91d17b55695f8d18fcf9938df181bffbaf67a036db78a9/Capture.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/66fb396b9859c8734ef8e8dd529955858164ba8a4e32d9085dd3099d5c9127b/List.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled.Core/Models/Booking.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Helper/DateHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled.Core/Repository/BookingRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled.Core/Services/BookingService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled.Core/Services/ReportService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled.Core/Services/RoomService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Constant/CommandRegex.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Untitled/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/suppakornrakna/Library/CloudStorage/OneDrive-KingMongkut’sUniversityofTechnologyThonburi(KMUTT)/Git/somewhere-first-interview/net7/Untitled/Untitled/Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -117,7 +122,7 @@
       <workItem from="1699607072302" duration="3164000" />
       <workItem from="1699610894674" duration="5837000" />
       <workItem from="1699631309364" duration="5369000" />
-      <workItem from="1699894692876" duration="328000" />
+      <workItem from="1699894692876" duration="945000" />
     </task>
     <task id="LOCAL-00001" summary="[NET7] feat: update more">
       <option name="closed" value="true" />
@@ -151,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699636684628</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: wire up wrapper&#10;- move main to top-level code">
+      <option name="closed" value="true" />
+      <created>1699895172657</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699895172657</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +188,7 @@
     <MESSAGE value="[NET7] feat: LINQ command" />
     <MESSAGE value="[NET7] feat: extract add service" />
     <MESSAGE value="[NET7] chore: remove unused using" />
-    <option name="LAST_COMMIT_MESSAGE" value="[NET7] chore: remove unused using" />
+    <MESSAGE value="feat: wire up wrapper&#10;- move main to top-level code" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: wire up wrapper&#10;- move main to top-level code" />
   </component>
 </project>
