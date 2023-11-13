@@ -6,6 +6,7 @@ public class BookingRepository : IBookingRepository
 {
     private readonly List<Booking> _activeBookings = new();
     private readonly List<Booking> _cancelledBookings = new();
+    private int _totalBookings;
 
     private bool IsAvailable(int roomId, DateTime checkIn, DateTime checkOut)
     {
@@ -23,11 +24,6 @@ public class BookingRepository : IBookingRepository
         }
 
         return true;
-    }
-
-    private int GetCurrentId()
-    {
-        return _activeBookings.Count + _cancelledBookings.Count + 1;
     }
 
     public void Upsert(Booking booking)
@@ -52,7 +48,7 @@ public class BookingRepository : IBookingRepository
 
         var booking = new Booking
         {
-            Id = GetCurrentId(),
+            Id = ++_totalBookings,
             RoomId = roomId,
             CheckIn = checkIn,
             CheckOut = checkOut
@@ -126,5 +122,50 @@ public class BookingRepository : IBookingRepository
         }
 
         _activeBookings[bookingIndex] = booking;
+    }
+
+    private void MoveToCancelledList(int bookingId)
+    {
+        var booking = _activeBookings.FirstOrDefault(b => b.Id == bookingId);
+        if (booking == null)
+        {
+            throw new ArgumentException($"Booking with id {bookingId} does not exist");
+        }
+
+        _activeBookings.Remove(booking);
+        _cancelledBookings.Add(booking);
+    }
+
+    private void RollbackCancelledList(int bookingId)
+    {
+        var booking = _cancelledBookings.FirstOrDefault(b => b.Id == bookingId);
+        if (booking == null)
+        {
+            throw new ArgumentException($"Booking with id {bookingId} does not exist");
+        }
+
+        _cancelledBookings.Remove(booking);
+        _activeBookings.Add(booking);
+    }
+
+    private void ClearCancelledList()
+    {
+        _cancelledBookings.Clear();
+    }
+
+    private void ClearActiveList()
+    {
+        _activeBookings.Clear();
+    }
+
+    private void Reset(bool resetId = false)
+    {
+        if (resetId)
+        {
+            _totalBookings = 0;
+        }
+
+        ClearActiveList();
+        ClearCancelledList();
     }
 }
